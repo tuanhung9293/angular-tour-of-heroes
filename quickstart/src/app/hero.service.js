@@ -18,17 +18,17 @@ var HeroService = (function () {
         this.heroesUrl = 'api/heroes';
         this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
     }
+    HeroService.prototype.getHeroes = function () {
+        return this.http.get(this.heroesUrl)
+            .toPromise()
+            .then(function (response) { return response.json().data; })
+            .catch(this.handleError);
+    };
     HeroService.prototype.getHero = function (id) {
         var url = this.heroesUrl + "/" + id;
         return this.http.get(url)
             .toPromise()
             .then(function (respond) { return respond.json().data; })
-            .catch(this.handleError);
-    };
-    HeroService.prototype.getHeroes = function () {
-        return this.http.get(this.heroesUrl)
-            .toPromise()
-            .then(function (response) { return response.json().data; })
             .catch(this.handleError);
     };
     HeroService.prototype.handleError = function (error) {

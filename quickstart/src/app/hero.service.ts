@@ -5,22 +5,22 @@ import { Hero } from './hero';
 
 @Injectable()
 export class HeroService {
-   getHero(id: number): Promise<Hero> {
-     const url = `${this.heroesUrl}/${id}`
-     return this.http.get(url)
-       .toPromise()
-       .then(respond => respond.json().data as Hero)
-       .catch(this.handleError);
-     }
   private heroesUrl = 'api/heroes';
-
   constructor(private  http: Http){}
 
   getHeroes(): Promise<Hero[]> {
     return this.http.get(this.heroesUrl)
       .toPromise()
       .then(response => response.json().data as Hero[])
-      .catch(this.handleError)
+      .catch(this.handleError);
+  }
+  
+  getHero(id: number): Promise<Hero> {
+    const url = `${this.heroesUrl}/${id}`;
+    return this.http.get(url)
+      .toPromise()
+      .then(respond => respond.json().data as Hero)
+      .catch(this.handleError);
   }
 
   private handleError(error: any): Promise<any> {
@@ -36,7 +36,7 @@ export class HeroService {
       .put(url, JSON.stringify(hero), {headers: this.headers})
       .toPromise()
       .then(() => hero)
-      .catch(this.handleError)
+      .catch(this.handleError);
   }
 
   create(name: string): Promise<Hero> {
